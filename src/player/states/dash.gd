@@ -1,16 +1,16 @@
 extends BaseState
 
 func enter() -> void:
+	var timer := get_tree().create_timer(movement.dash_duration)
+	timer.timeout.connect(_on_dash_ended)
+
 	movement.dashing = true
 	body.can_flip = false
 	
-	var timer := get_tree().create_timer(movement.dash_duration)
-	timer.timeout.connect(_on_dash_ended)
-	
-	if body.facing_right:
+	if body.is_facing_right():
 		body.velocity.x = movement.dash_velocity
-	elif not body.facing_right:
-		body.velocity.x = -movement.dash_velocity
+	else:
+		body.velocity.x = - movement.dash_velocity
 
 func physics_process(delta: float) -> void:
 	body.velocity.y = movement.dash_gravity

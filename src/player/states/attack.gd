@@ -5,6 +5,7 @@ extends BaseState
 func enter() -> void:
 	var timer := get_tree().create_timer(movement.attack_duration)
 	timer.timeout.connect(_on_attack_ended)
+	
 	movement.attacking = true
 	body.can_flip = false
 	hitbox.collision.disabled = false

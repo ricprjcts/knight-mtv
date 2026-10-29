@@ -3,9 +3,11 @@ extends BaseState
 @export var stun_time := 0.5
 
 func enter() -> void:
+	var timer := get_tree().create_timer(stun_time)
+	timer.timeout.connect(_on_stun_ended)
+	
 	body.stunned = true
 	movement.direction = 0.0
-	get_tree().create_timer(stun_time).timeout.connect(_on_stun_ended)
 
 func physics_process(delta: float) -> void:
 	body.velocity.y += movement.gravity * delta

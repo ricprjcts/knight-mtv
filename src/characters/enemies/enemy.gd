@@ -11,6 +11,8 @@ class_name Enemy
 @export var attack_hitbox: Hitbox
 
 func _ready() -> void:
+	add_to_group("Enemies")
+	
 	health_component.max_health = enemy_stats.max_health
 	health_component.health = health_component.max_health
 	movement_component.speed = enemy_stats.movement_speed

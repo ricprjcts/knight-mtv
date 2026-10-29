@@ -12,7 +12,7 @@ func _exit() -> void:
 
 func _tick(delta: float) -> Status:
 	direction = blackboard.get_var("direction")
-	if agent.is_at_ledge_or_wall():
+	if agent.is_at_wall():
 		direction = -signf(agent.wall_ray.target_position.x)
 		blackboard.set_var("direction", direction)
 	

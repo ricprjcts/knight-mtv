@@ -3,7 +3,7 @@ extends BTAction
 var direction := 0.0
 
 func _tick(delta: float) -> Status:
-	if agent.is_at_ledge_or_wall():
+	if agent.is_at_wall():
 		direction = -signf(agent.wall_ray.target_position.x)
 		return SUCCESS
 	else:

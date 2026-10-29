@@ -16,3 +16,6 @@ func physics_process(delta: float) -> void:
 	
 	elif movement.do_attack():
 		change_state.emit(states[body.states.attack])
+	
+	elif body.can_wall_grab():
+		change_state.emit(states[body.states.wall])

@@ -35,12 +35,6 @@ script = ExtResource("2_fk8uc")
 custom_name = "Sequence - Chase"
 children = [SubResource("BTCheckVar_t10bv"), SubResource("BTAction_fk8uc"), SubResource("BTPlayAnimation_g2k7s"), SubResource("BTAction_g2k7s")]
 
-[sub_resource type="BTCooldown" id="BTCooldown_fk8uc"]
-duration = 2.0
-trigger_on_failure = true
-cooldown_state_var = &"chase_cooldown"
-children = [SubResource("BTSequence_t10bv")]
-
 [sub_resource type="BBNode" id="BBNode_pjmeo"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -90,7 +84,7 @@ custom_name = "Sequence - Patrol"
 children = [SubResource("BTProbability_x8nc2"), SubResource("BTSequence_6t0ck")]
 
 [sub_resource type="BTSelector" id="BTSelector_1jndn"]
-children = [SubResource("BTCooldown_fk8uc"), SubResource("BTSequence_x8nc2")]
+children = [SubResource("BTSequence_t10bv"), SubResource("BTSequence_x8nc2")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_iss83")

@@ -31,9 +31,8 @@ func load_enemy(scene: PackedScene) -> void:
 	
 	var _entities_root := _main_game.get_game_root(DataTypes.GameRoots.ENTITIES) as Node2D
 	if _entities_root == null:
-		push_error("Could not get entities root")
 		return
 	
 	enemy_instance.global_position = global_position
-	queue_free()
 	_entities_root.add_child(enemy_instance)
+	queue_free()

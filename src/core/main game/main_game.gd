@@ -56,6 +56,7 @@ func load_scene(scene_uid: String) -> void:
 	_current_scene = new_level
 	level_root.add_child(_current_scene)
 
+## Returns one of the game roots
 func get_game_root(root: DataTypes.GameRoots) -> Node:
 	match root:
 		DataTypes.GameRoots.LEVEL:
@@ -70,6 +71,8 @@ func get_game_root(root: DataTypes.GameRoots) -> Node:
 			return pause_root
 		DataTypes.GameRoots.TRANSITION:
 			return transition_root
+	
+	push_error("Could not get root: ", DataTypes.GameRoots.keys()[root].to_lower().capitalize())
 	return null
 
 func _init_player(player_scene_uid: String) -> void:

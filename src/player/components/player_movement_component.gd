@@ -19,6 +19,11 @@ var attacking := false
 var dash := false
 var attack := false
 
+func wants_wall_jump() -> bool:
+	if body.is_on_wall_only() and jump:
+		return true
+	return false
+
 func can_dash() -> bool:
 	if not dash_debounce and not attacking and not body.stunned:
 		return true

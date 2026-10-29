@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dsss6qr0floay" path="res://assets/sprites/player/Dashing_KG_1.png" id="7_jcdrv"]
 [ext_resource type="Script" uid="uid://uvwt2wyvwklx" path="res://src/player/states/idle.gd" id="7_o822w"]
 [ext_resource type="Script" uid="uid://b86uj4qxpmgak" path="res://src/scripts/components/health_component.gd" id="8_2smqc"]
+[ext_resource type="Texture2D" uid="uid://bbx88ahl06oae" path="res://assets/sprites/player/Wallside_KG_1.png" id="8_5shm8"]
 [ext_resource type="Script" uid="uid://c132ldhrnabpv" path="res://src/scripts/components/hitbox.gd" id="9_jcdrv"]
 [ext_resource type="Script" uid="uid://dfqigtf4a470m" path="res://src/player/components/input_component.gd" id="9_l271a"]
 [ext_resource type="Script" uid="uid://co8yuo6hc3b27" path="res://src/player/states/move.gd" id="10_8ydov"]
@@ -21,6 +22,7 @@
 [ext_resource type="Script" uid="uid://kpkdfmpx3b4s" path="res://src/player/states/stun.gd" id="16_6bm8s"]
 [ext_resource type="Script" uid="uid://7lujamdb580b" path="res://src/player/states/attack.gd" id="18_vwsmr"]
 [ext_resource type="Script" uid="uid://dtqmog4l113rj" path="res://src/player/states/dash.gd" id="19_hja65"]
+[ext_resource type="Script" uid="uid://bnnufbssg8rog" path="res://src/player/states/wall.gd" id="22_5efpn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vwi60"]
 atlas = ExtResource("6_hrerp")
@@ -149,6 +151,14 @@ region = Rect2(500, 0, 100, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_vwsmr"]
 atlas = ExtResource("4_5f2sf")
 region = Rect2(600, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0enb"]
+atlas = ExtResource("8_5shm8")
+region = Rect2(0, 0, 100, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phdu6"]
+atlas = ExtResource("8_5shm8")
+region = Rect2(100, 0, 100, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sqj2n"]
 animations = [{
@@ -282,6 +292,17 @@ animations = [{
 "loop": 1,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0enb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phdu6")
+}],
+"loop": 1,
+"name": &"wall",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqj2n"]
@@ -294,6 +315,7 @@ size = Vector2(10, 29)
 size = Vector2(23, 34)
 
 [node name="Player" type="CharacterBody2D" unique_id=1123767873 node_paths=PackedStringArray("state_machine", "input", "health", "movement", "hitbox") groups=["Player"]]
+z_index = -1
 collision_layer = 2
 script = ExtResource("1_4anbu")
 state_machine = NodePath("StateMachine")
@@ -306,13 +328,23 @@ hitbox = NodePath("CollisionBoxes/Hitbox")
 position = Vector2(0, -16.000002)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_sqj2n")
-animation = &"dash"
+animation = &"wall"
 autoplay = "idle"
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1341124974]
 position = Vector2(0, -14.5)
 shape = SubResource("RectangleShape2D_sqj2n")
 debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="Raycasts" type="Node2D" parent="." unique_id=1218121730]
+
+[node name="WallRay" type="RayCast2D" parent="Raycasts" unique_id=372110221]
+position = Vector2(0, -29)
+target_position = Vector2(28, 0)
+
+[node name="GroundRay" type="RayCast2D" parent="Raycasts" unique_id=1597427688]
+position = Vector2(0, -13)
+target_position = Vector2(0, 32)
 
 [node name="CollisionBoxes" type="Node2D" parent="." unique_id=121518557]
 
@@ -394,6 +426,13 @@ metadata/_custom_type_script = "uid://dr3bhl4evjs0"
 [node name="Attack" type="Node" parent="StateMachine" unique_id=441835426 node_paths=PackedStringArray("hitbox")]
 script = ExtResource("18_vwsmr")
 hitbox = NodePath("../../CollisionBoxes/Hitbox")
+metadata/_custom_type_script = "uid://dr3bhl4evjs0"
+
+[node name="Wall" type="Node" parent="StateMachine" unique_id=1572984632]
+script = ExtResource("22_5efpn")
+max_wall_gravity = 0.75
+leave_wall_delay = 0.25
+sprite_offset = 8.0
 metadata/_custom_type_script = "uid://dr3bhl4evjs0"
 
 [node name="Stun" type="Node" parent="StateMachine" unique_id=1845089104]

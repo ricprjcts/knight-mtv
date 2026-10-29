@@ -13,20 +13,24 @@ class_name Player
 var facing_right := true
 var can_flip := true
 
+@onready var wall_ray: RayCast2D = $Raycasts/WallRay
+@onready var ground_ray: RayCast2D = $Raycasts/GroundRay
+
+
 var states := {
 	idle = "Idle",
 	move = "Move",
 	jump = "Jump",
 	fall = "Fall",
-	attack = "Attack",
 	dash = "Dash",
+	attack = "Attack",
+	wall = "Wall",
 	stun = "Stun",
 }
 
 var jump_buffer := 0.15
 var jump_buffer_counter := 0.0
 
-var attacking := false
 var stunned := false
 
 func _ready() -> void:
@@ -58,8 +62,18 @@ func _physics_process(delta: float) -> void:
 	
 	state_machine.physics_process(delta)
 
+func is_facing_right() -> bool:
+	return facing_right
+
+func can_wall_grab() -> bool:
+	if is_on_wall_only() and wall_ray.is_colliding() and not ground_ray.is_colliding():
+		return true
+	return false
+
 func _on_damage_taken(amount: int) -> void:
 	state_machine.change_state(state_machine.get_node(states.stun))
+	health.set_invincibility(1.0)
+	
 	sprite.play("hurt")
 
 func _on_died() -> void:
@@ -89,6 +103,8 @@ func _set_anim() -> void:
 			sprite.play("attack")
 		states.dash:
 			sprite.play("dash")
+		states.wall:
+			sprite.play("wall")
 
 func _flip_char() -> void:
 	if sprite and can_flip:
@@ -101,6 +117,8 @@ func _flip_char() -> void:
 
 func _flip_collisions() -> void:
 	if facing_right:
+		wall_ray.target_position.x = 28.0
 		hitbox.collision.position.x = 17.0
 	if not facing_right:
+		wall_ray.target_position.x = -28.0
 		hitbox.collision.position.x = -17.0
