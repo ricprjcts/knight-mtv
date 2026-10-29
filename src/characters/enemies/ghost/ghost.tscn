@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://b2ddxm3scglp3"]
+
+[ext_resource type="Script" uid="uid://dj50i12sf4y15" path="res://src/characters/enemies/ghost/ghost.gd" id="1_pjmeo"]
+[ext_resource type="Script" uid="uid://bh1478endtq1l" path="res://src/resources/enemy_stats.gd" id="2_4xpd7"]
+[ext_resource type="Texture2D" uid="uid://c30tsm0w0nd0k" path="res://assets/sprites/characters/ghost/ghost-sprite-sheet.png" id="3_4c7nl"]
+[ext_resource type="Script" uid="uid://b03xiaopsllhc" path="res://src/scripts/components/hurtbox.gd" id="5_hm3dp"]
+[ext_resource type="Script" uid="uid://c132ldhrnabpv" path="res://src/scripts/components/hitbox.gd" id="7_6t0ck"]
+[ext_resource type="Script" uid="uid://wufyj8h1dgpm" path="res://src/scripts/components/movement_component.gd" id="8_vh2mp"]
+[ext_resource type="Script" uid="uid://b86uj4qxpmgak" path="res://src/scripts/components/health_component.gd" id="9_e3nv5"]
+[ext_resource type="BehaviorTree" uid="uid://vv2pwuinloqr" path="res://ai/trees/ghost_tree.tres" id="11_pjmeo"]
+
+[sub_resource type="Resource" id="Resource_na7gc"]
+script = ExtResource("2_4xpd7")
+movement_speed = 70.0
+max_health = 10
+knockback_force = Vector2(120, -150)
+metadata/_custom_type_script = "uid://bh1478endtq1l"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqj2n"]
+size = Vector2(14, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cgh54"]
+size = Vector2(14, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_767g6"]
+size = Vector2(14, 44)
+
+[sub_resource type="Animation" id="Animation_4c7nl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hjco7"]
+resource_name = "chase"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_iss83"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_pjmeo"]
+resource_name = "shriek"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [21, 22, 23, 24]
+}
+
+[sub_resource type="Animation" id="Animation_x8nc2"]
+resource_name = "spawn"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hjco7"]
+_data = {
+&"RESET": SubResource("Animation_4c7nl"),
+&"chase": SubResource("Animation_hjco7"),
+&"idle": SubResource("Animation_iss83"),
+&"shriek": SubResource("Animation_pjmeo"),
+&"spawn": SubResource("Animation_x8nc2")
+}
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_hjco7"]
+
+[node name="Ghost" type="CharacterBody2D" unique_id=1209959253 node_paths=PackedStringArray("movement_component", "health_component", "contact_hitbox")]
+collision_layer = 0
+script = ExtResource("1_pjmeo")
+player_aggro_threshold = 100.0
+stun_time = 0.05
+enemy_stats = SubResource("Resource_na7gc")
+movement_component = NodePath("Components/MovementComponent")
+health_component = NodePath("Components/HealthComponent")
+contact_hitbox = NodePath("CollisionBoxes/ContactHitbox")
+metadata/_custom_type_script = "uid://rqli4wdcm0nn"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=9288446]
+position = Vector2(0, -28)
+texture = ExtResource("3_4c7nl")
+hframes = 7
+vframes = 5
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1814243645]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_sqj2n")
+debug_color = Color(0, 0.5950001, 0.7, 0)
+
+[node name="Raycasts" type="Node2D" parent="." unique_id=503277240]
+
+[node name="WallRay" type="RayCast2D" parent="Raycasts" unique_id=1115365947]
+position = Vector2(0, -22)
+target_position = Vector2(-16, 0)
+
+[node name="LedgeRay" type="RayCast2D" parent="Raycasts" unique_id=626164934]
+position = Vector2(-15, -22)
+target_position = Vector2(0, 32)
+
+[node name="CollisionBoxes" type="Node2D" parent="." unique_id=1811509136]
+
+[node name="ContactHitbox" type="Area2D" parent="CollisionBoxes" unique_id=1265539429 node_paths=PackedStringArray("body", "collision")]
+script = ExtResource("7_6t0ck")
+body = NodePath("../..")
+collision = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://c132ldhrnabpv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes/ContactHitbox" unique_id=273428157]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_cgh54")
+debug_color = Color(0, 0.5950001, 0.7, 0)
+
+[node name="Hurtbox" type="Area2D" parent="CollisionBoxes" unique_id=2008942794 node_paths=PackedStringArray("body", "collision", "health_component")]
+script = ExtResource("5_hm3dp")
+body = NodePath("../..")
+collision = NodePath("CollisionShape2D")
+health_component = NodePath("../../Components/HealthComponent")
+metadata/_custom_type_script = "uid://b03xiaopsllhc"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes/Hurtbox" unique_id=2073896613]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_767g6")
+debug_color = Color(0, 0.5950001, 0.7, 0)
+
+[node name="Components" type="Node" parent="." unique_id=1184139893]
+
+[node name="MovementComponent" type="Node" parent="Components" unique_id=443692782 node_paths=PackedStringArray("body")]
+script = ExtResource("8_vh2mp")
+body = NodePath("../..")
+metadata/_custom_type_script = "uid://wufyj8h1dgpm"
+
+[node name="HealthComponent" type="Node" parent="Components" unique_id=1716455909 node_paths=PackedStringArray("body")]
+script = ExtResource("9_e3nv5")
+body = NodePath("../..")
+max_health = 6
+metadata/_custom_type_script = "uid://b86uj4qxpmgak"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=598188668]
+libraries/ = SubResource("AnimationLibrary_hjco7")
+autoplay = &"spawn"
+
+[node name="BTPlayer" type="BTPlayer" parent="." unique_id=1552534051]
+behavior_tree = ExtResource("11_pjmeo")
+blackboard_plan = SubResource("BlackboardPlan_hjco7")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://gxd2q8xvnpjd"]
+
+[ext_resource type="Script" uid="uid://df0dwi6wo5air" path="res://src/characters/enemies/spawn/enemy_spawn.gd" id="1_3a1vr"]
+
+[node name="EnemySpawn" type="Marker2D" unique_id=1893903381]
+script = ExtResource("1_3a1vr")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=1554679789]
+unique_name_in_owner = true
