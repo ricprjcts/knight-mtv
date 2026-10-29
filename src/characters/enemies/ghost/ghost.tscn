@@ -1,20 +1,13 @@
 [gd_scene format=3 uid="uid://b2ddxm3scglp3"]
 
 [ext_resource type="Script" uid="uid://dj50i12sf4y15" path="res://src/characters/enemies/ghost/ghost.gd" id="1_pjmeo"]
-[ext_resource type="Script" uid="uid://bh1478endtq1l" path="res://src/resources/enemy_stats.gd" id="2_4xpd7"]
+[ext_resource type="Resource" uid="uid://palg085oe25p" path="res://src/characters/enemies/ghost/ghost_stats.tres" id="2_hm3dp"]
 [ext_resource type="Texture2D" uid="uid://c30tsm0w0nd0k" path="res://assets/sprites/characters/ghost/ghost-sprite-sheet.png" id="3_4c7nl"]
 [ext_resource type="Script" uid="uid://b03xiaopsllhc" path="res://src/scripts/components/hurtbox.gd" id="5_hm3dp"]
 [ext_resource type="Script" uid="uid://c132ldhrnabpv" path="res://src/scripts/components/hitbox.gd" id="7_6t0ck"]
 [ext_resource type="Script" uid="uid://wufyj8h1dgpm" path="res://src/scripts/components/movement_component.gd" id="8_vh2mp"]
 [ext_resource type="Script" uid="uid://b86uj4qxpmgak" path="res://src/scripts/components/health_component.gd" id="9_e3nv5"]
 [ext_resource type="BehaviorTree" uid="uid://vv2pwuinloqr" path="res://ai/trees/ghost_tree.tres" id="11_pjmeo"]
-
-[sub_resource type="Resource" id="Resource_na7gc"]
-script = ExtResource("2_4xpd7")
-movement_speed = 70.0
-max_health = 10
-knockback_force = Vector2(120, -150)
-metadata/_custom_type_script = "uid://bh1478endtq1l"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqj2n"]
 size = Vector2(14, 44)
@@ -126,7 +119,7 @@ collision_layer = 0
 script = ExtResource("1_pjmeo")
 player_aggro_threshold = 100.0
 stun_time = 0.05
-enemy_stats = SubResource("Resource_na7gc")
+enemy_stats = ExtResource("2_hm3dp")
 movement_component = NodePath("Components/MovementComponent")
 health_component = NodePath("Components/HealthComponent")
 contact_hitbox = NodePath("CollisionBoxes/ContactHitbox")
@@ -188,7 +181,6 @@ metadata/_custom_type_script = "uid://wufyj8h1dgpm"
 [node name="HealthComponent" type="Node" parent="Components" unique_id=1716455909 node_paths=PackedStringArray("body")]
 script = ExtResource("9_e3nv5")
 body = NodePath("../..")
-max_health = 6
 metadata/_custom_type_script = "uid://b86uj4qxpmgak"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=598188668]

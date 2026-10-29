@@ -1,8 +1,5 @@
 extends BaseState
 
-@export var movement: MovementComponent
-@export var attack: AttackComponent
-
 func enter() -> void:
 	body.velocity.y = movement.jump_velocity
 
@@ -18,5 +15,8 @@ func physics_process(delta: float) -> void:
 		body.velocity.y = 0.0
 		change_state.emit(states[body.states.fall])
 	
-	elif attack.do_attack():
+	elif movement.do_dash():
+		change_state.emit(states[body.states.dash])
+	
+	elif movement.do_attack():
 		change_state.emit(states[body.states.attack])

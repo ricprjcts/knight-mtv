@@ -7,6 +7,7 @@ var state_machine: StateMachine
 var states: Dictionary[String, BaseState] = {}
 
 var body: CharacterBody2D
+var movement: MovementComponent
 
 func enter() -> void:
 	pass

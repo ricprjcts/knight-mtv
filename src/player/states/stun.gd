@@ -1,8 +1,5 @@
 extends BaseState
 
-@export var movement: MovementComponent
-@export var attack: AttackComponent
-
 @export var stun_time := 0.5
 
 func enter() -> void:

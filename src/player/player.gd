@@ -5,8 +5,7 @@ class_name Player
 
 @export var input: InputComponent
 @export var health: HealthComponent
-@export var movement: MovementComponent
-@export var attack: AttackComponent
+@export var movement: PlayerMovement
 
 @export var hitbox: Hitbox
 
@@ -20,6 +19,7 @@ var states := {
 	jump = "Jump",
 	fall = "Fall",
 	attack = "Attack",
+	dash = "Dash",
 	stun = "Stun",
 }
 
@@ -30,10 +30,7 @@ var attacking := false
 var stunned := false
 
 func _ready() -> void:
-	_init_player()
-
-func _init_player() -> void:
-	hitbox.damage = attack.attack_damage
+	hitbox.damage = movement.attack_damage
 	
 	health.took_damage.connect(_on_damage_taken)
 	health.died.connect(_on_died)
@@ -50,7 +47,8 @@ func _process(delta: float) -> void:
 		movement.direction = input.direction
 		movement.jump = input.jump_pressed
 		movement.fall = input.jump_released
-		attack.attack = input.attack_pressed
+		movement.dash = input.dash_pressed
+		movement.attack = input.attack_pressed
 	
 	state_machine.process(delta)
 
@@ -89,6 +87,8 @@ func _set_anim() -> void:
 			sprite.play("fall")
 		states.attack:
 			sprite.play("attack")
+		states.dash:
+			sprite.play("dash")
 
 func _flip_char() -> void:
 	if sprite and can_flip:

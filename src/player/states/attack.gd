@@ -1,13 +1,11 @@
 extends BaseState
 
-@export var movement: MovementComponent
-@export var attack: AttackComponent
 @export var hitbox: Hitbox
 
 func enter() -> void:
-	var timer := get_tree().create_timer(attack.attack_duration)
+	var timer := get_tree().create_timer(movement.attack_duration)
 	timer.timeout.connect(_on_attack_ended)
-	body.attacking = true
+	movement.attacking = true
 	body.can_flip = false
 	hitbox.collision.disabled = false
 
@@ -20,10 +18,10 @@ func physics_process(delta: float) -> void:
 		body.velocity.y = 0.0
 
 func _on_attack_ended() -> void:
-	body.attacking = false
+	movement.attacking = false
 	body.can_flip = true
 	
-	attack.start_cooldown()
+	movement.start_attack_cooldown()
 	hitbox.collision.set_deferred("disabled", true)
 	
 	if state_machine.active_state == self:

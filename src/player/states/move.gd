@@ -1,8 +1,5 @@
 extends BaseState
 
-@export var movement: MovementComponent
-@export var attack: AttackComponent
-
 @export var coyote_jump := 0.2
 var coyote_jump_counter := 0.0
 
@@ -17,7 +14,10 @@ func physics_process(delta: float) -> void:
 	elif movement.wants_jump():
 		change_state.emit(states[body.states.jump])
 	
-	elif attack.do_attack():
+	elif movement.do_dash():
+		change_state.emit(states[body.states.dash])
+	
+	elif movement.do_attack():
 		change_state.emit(states[body.states.attack])
 	
 	elif not body.is_on_floor():

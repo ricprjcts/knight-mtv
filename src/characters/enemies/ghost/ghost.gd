@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_flip_rays()
 	
-	if check_player_distance() and not bt_player.blackboard.get_var("chase_cooldown", true):
+	if check_player_distance() and not bt_player.blackboard.get_var("chase_cooldown"):
 		bt_player.blackboard.set_var("player", player)
 		bt_player.blackboard.set_var("state", "chase")
 		bt_player.restart()

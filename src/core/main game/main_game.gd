@@ -1,8 +1,6 @@
 extends Node
 class_name MainGame
 
-## Emitted when the current level has fully loaded.
-signal level_loaded
 
 const PLAYER_SCENE_UID: String = "uid://r188evn2vwhw"
 var player: Player = null
@@ -56,11 +54,9 @@ func load_scene(scene_uid: String) -> void:
 		return
 	
 	_current_scene = new_level
-	level_loaded.emit()
 	level_root.add_child(_current_scene)
 
 func get_game_root(root: DataTypes.GameRoots) -> Node:
-	print(root)
 	match root:
 		DataTypes.GameRoots.LEVEL:
 			return level_root

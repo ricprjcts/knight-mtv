@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://palg085oe25p"]
+
+[ext_resource type="Script" uid="uid://bh1478endtq1l" path="res://src/resources/enemy_stats.gd" id="1_vffay"]
+
+[resource]
+script = ExtResource("1_vffay")
+movement_speed = 70.0
+knockback_force = Vector2(120, -150)
+metadata/_custom_type_script = "uid://bh1478endtq1l"

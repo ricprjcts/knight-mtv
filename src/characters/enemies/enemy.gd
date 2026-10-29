@@ -11,8 +11,9 @@ class_name Enemy
 @export var attack_hitbox: Hitbox
 
 func _ready() -> void:
-	movement_component.speed = enemy_stats.movement_speed
 	health_component.max_health = enemy_stats.max_health
+	health_component.health = health_component.max_health
+	movement_component.speed = enemy_stats.movement_speed
 	
 	match enemy_stats.enemy_behavior:
 		DataTypes.EnemyBehavior.PASSIVE:
